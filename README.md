@@ -34,3 +34,22 @@ helm install devtron devtron/devtron-operator --create-namespace --namespace dev
 ```
 kubectl -n devtroncd get secret devtron-secret -o jsonpath='{.data.ACD_PASSWORD}' | base64 -d
 ```
+# You can watch the progress of Devtron microservices installation by the following command
+```
+kubectl -n devtroncd get installers installer-devtron -o jsonpath='{.status.sync.status}'
+```
+# Uninstall devtron
+```
+helm uninstall devtron --namespace devtroncd
+kubectl delete -n devtroncd -f https://raw.githubusercontent.com/devtron-labs/charts/main/charts/devtron/crds/crd-devtron.yaml
+kubectl delete -n argo -f https://raw.githubusercontent.com/devtron-labs/devtron/main/manifests/yamls/workflow.yaml
+kubectl delete ns devtroncd devtron-cd devtron-ci devtron-demo
+```
+# References:
+```
+Installation:
+https://docs.devtron.ai/setup/install/install-devtron-helm-3
+Installation Configurations:
+https://docs.devtron.ai/setup/install/installation-configuration
+```
+
